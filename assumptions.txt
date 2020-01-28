@@ -1,0 +1,18 @@
+Assignment statement:
+
+Setup a Cassandra cluster in docker. Write a service in http (bonus for https) that will store the time and date in Cassandra every time it’s pinged via http. Build a web UI with a button that will trigger the ping/hit to the backend. Try to containerize as much as possible.
+
+Please sure your GitHub with us.  Also document and share any assumptions you make. We’ll discuss your work (even if it’s not finished) and ask questions during the phone screen.
+
+Assumptions:
+Because the point of Docker is to create containers that run the same on any machine, I assumed the ultimate deliverable was a single script that could be run, would set up the containers, initialize the Cassandra cluster, create the table, and start running the http server.  To that end, I created a script called run_all.sh which tries to do just that.  
+
+I have assumed that Docker and Python3 are already installed on the machine.  I developed this script on Ubuntu 18.04 and have no idea what would happen if this script was run on a different OS.  Unfortunately I did not have enough time to figure out how to create the web UI (I think this part should have been a slam dunk but ultimately I ran out of time).  Also, I did not set up the cluster to accept incoming HTTP requests from another machine -- it can only take localhost requests.
+
+I created a Cassandra cluster with 3 nodes to showcase some of Cassandra's data replication abiliteis.  There are two datacenters, with one DC having two nodes sharing the load 50/50 and the second DC having one node that contains a replica of the first DC.
+
+The Table I created has two fields -- a timestamp primitive which is the primary key, and also a textual timestamp.  Upon accessing localhost:8888, the current date and time is inserted into both columns.  The timestamp primitive converts the incoming timestamp into its own timezone whose behavior I did not figure out how to alter.  Refreshing the page will send another GET request and insert the current date and time again.
+
+
+
+
